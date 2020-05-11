@@ -4,7 +4,7 @@ server:
   port: 8010
 eureka:
   instance:
-    hostname: eurekahost
+    hostname: localhost
   client:
     register-with-eureka: false
     fetch-registry: false

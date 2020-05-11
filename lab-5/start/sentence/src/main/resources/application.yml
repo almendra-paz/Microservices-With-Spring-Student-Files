@@ -1,0 +1,14 @@
+---
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka/
+
+---
+spring:
+  profiles: sentence
+server:
+  port: 8020
+words: NotApplicable
+
+

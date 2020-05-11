@@ -14,6 +14,8 @@
     - mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=adjective"
     - mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=noun"
   - Or if you wish to run from directly within STS, right click on the project, Run As... / Run Configurations... .  From the Spring Boot tab specify a Profile of "subject", UNCHECK live bean support, and Run.  Repeat this process (or copy the run configuration) for the profiles "verb", "article", "adjective", "noun".
+  
+  mvn spring-boot:run -Dspring-boot.run.profiles=subject
 
 4.  Check Eureka at [http://localhost:8010](http://localhost:8010).   Any warnings about running a single instance are expected.  Ensure that each of your 5 applications are eventually listed in the "Application" section, bearing in mind it may take a few moments for the registration process to be 100% complete.	
 
@@ -25,9 +27,14 @@
 
 7.  First, take a look at the lab-7-sentence-server project.  It has been refactored a bit from previous examples.  There is now a WordService and WordServiceImpl that wraps calls to the Feign clients.  This was mainly done to make the lab instructions easier, so that your code modifications are within one class.
 
-8.  Open the POM.  Add another dependency for spring-cloud-starter-hystrix.
+8.  Open the POM.  Add another dependency 
 
-9.  Edit the main Application configuration class and @EnableHystix.
+<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+
+9.  Edit the main Application configuration class and @EnableCircuitBreaker
 
 10.  Refactor the WordServiceImpl to use Hystrix.  We have decided that it is not strictly necessary to have an adjective in our sentence if the adjective service is failing, so modify the getAdjective service to run within a Hystrix Command.  Establish a fallback method that will return an empty Word (new Word(“”)).
 

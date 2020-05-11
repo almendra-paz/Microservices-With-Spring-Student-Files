@@ -14,6 +14,8 @@
     - mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=adjective"
     - mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=noun"
   - Or if you wish to run from directly within STS, right click on the project, Run As... / Run Configurations... .  From the Spring Boot tab specify a Profile of "subject", UNCHECK live bean support, and Run.  Repeat this process (or copy the run configuration) for the profiles "verb", "article", "adjective", "noun".
+  
+  mvn spring-boot:run -Dspring-boot.run.profiles=subject
 
 4.  Check the Eureka server running at [http://localhost:8010](http://localhost:8010).   Ignore any warnings about running a single instance; this is expected.  Ensure that each of your 5 applications are eventually listed in the "Application" section, bearing in mind it may take a few moments for the registration process to be 100% complete.	
 
@@ -26,6 +28,11 @@
 7.  First, take a look at the lab-6-sentence-server project.  It has been refactored a bit from previous examples.  The controller has been simplified to do only web work, the task of assembling the sentence is now in the service layer.  The SentenceService uses @Autowire to reference individual DAO components which have been created to obtain the words from the remote resources.  Since all of the remote resources are structurally the same, there is a fair bit of inheritance in the dao package to make things easy.  But each uses the same Ribbon client technology and RestTemplate used previously.
 
 8.  Open the POM.  Add another dependency for spring-cloud-starter-feign.
+
+<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 
 9.  Edit the main Application configuration class and @EnableFeignClients.
 
